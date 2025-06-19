@@ -201,7 +201,7 @@ export const AddRecord = () => {
 
             {/* Name Field - Required */}
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, styles.required]}>Full Name *</Text>
+              <Text style={[styles.label, styles.required]}>Full Name </Text>
               <View style={styles.inputContainer}>
                 <Ionicons name="person-outline" size={20} color={colors.icon} />
                 <TextInput
@@ -312,7 +312,7 @@ const createStyles = (colors: Colors) => {
     },
     scrollView: {
       flex: 1,
-      backgroundColor: colors.input,
+      backgroundColor: colors.background,
     },
     header: {
       backgroundColor: colors.background,
@@ -333,7 +333,8 @@ const createStyles = (colors: Colors) => {
       color: colors.subText,
     },
     form: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.card,
+
       margin: 16,
       borderRadius: 12,
       padding: 20,
@@ -391,6 +392,7 @@ const createStyles = (colors: Colors) => {
     },
     inputGroup: {
       marginBottom: 20,
+      backgroundColor: colors.card,
     },
     label: {
       fontSize: 14,
@@ -408,7 +410,7 @@ const createStyles = (colors: Colors) => {
       borderColor: colors.border,
       borderRadius: 8,
       paddingHorizontal: 12,
-      backgroundColor: colors.input,
+      backgroundColor: colors.background,
     },
     disabledInput: {
       backgroundColor: colors.input,

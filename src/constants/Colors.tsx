@@ -13,7 +13,7 @@ export const root = {
   background: "#f2f2f2",
   foreground: "#fff",
   icon: "#687076",
-  primary: "#0072A5",
+  primary: "#3498db",
   card: "#fff",
   border: "#E0E0E0",
   input: "#F2F2F2",

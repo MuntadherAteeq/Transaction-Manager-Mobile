@@ -1,4 +1,5 @@
 import RecordListItem from "@/src/components/Record/Record-Item";
+import { useColors } from "@/src/constants/Colors";
 import { useRecords } from "@/src/models/Record";
 import { Button } from "@react-navigation/elements";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -14,14 +15,18 @@ type RootStackParamList = {
 
 export function MainTab() {
   const { records } = useRecords();
+  const colors = useColors();
   const nav = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <>
       <FlatList
         data={records}
-        renderItem={({ item }) => <RecordListItem record={item} />}
+        renderItem={({ item }) => (
+          <RecordListItem key={item.id} record={item} />
+        )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ padding: 10 }}
+        style={{ flex: 1, backgroundColor: colors.background }}
       />
       <Button
         onPressIn={() => {
