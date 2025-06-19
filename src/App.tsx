@@ -1,13 +1,17 @@
-import { Assets } from "@react-navigation/elements";
+import { Assets, HeaderButton } from "@react-navigation/elements";
 import { Asset } from "expo-asset";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
-import { Navigation } from "./navigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Text } from "./components/text";
+import { HomePage } from "./pages/Home";
+import { RecordsProvider } from "./models/Record";
 
 SplashScreen.preventAutoHideAsync();
+const Stack = createNativeStackNavigator();
 
 export function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -37,7 +41,18 @@ export function App() {
   return (
     <NavigationContainer>
       <SafeAreaProvider>
-        <Navigation />
+        <RecordsProvider>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="HomePage"
+              component={HomePage}
+              options={{
+                title: "Home",
+                headerShown: false,
+              }}
+            />
+          </Stack.Navigator>
+        </RecordsProvider>
       </SafeAreaProvider>
     </NavigationContainer>
   );
