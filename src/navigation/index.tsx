@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 function HomeTabs() {
   const colors = useColors();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarScrollEnabled: false,
