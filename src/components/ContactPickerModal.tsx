@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { useColors } from "../constants/Colors";
+import { Colors, useColors } from "../constants/Colors";
 import { Text } from "./text";
 import { View } from "./view";
 
@@ -32,6 +32,7 @@ const ContactPickerModal: React.FC<ContactPickerModalProps> = ({
   const [loading, setLoading] = useState(true);
 
   const colors = useColors();
+  const styles = createStyles(colors);
 
   useEffect(() => {
     if (visible) {
@@ -47,7 +48,9 @@ const ContactPickerModal: React.FC<ContactPickerModalProps> = ({
         fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
       });
       setContacts(data);
-      setFilteredContacts(data);
+      setFilteredContacts(
+        data.filter((predicate) => predicate.phoneNumbers?.length)
+      );
     }
     setLoading(false);
   };
@@ -131,71 +134,73 @@ const ContactPickerModal: React.FC<ContactPickerModalProps> = ({
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    paddingTop: 50,
-    paddingBottom: 12,
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    backgroundColor: "#f9f9f9",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  exitButton: {
-    padding: 4,
-  },
-  searchBox: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    backgroundColor: "#fafafa",
-  },
-  searchInput: {
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    fontSize: 16,
-    color: "#333",
-  },
-  list: {
-    paddingHorizontal: 16,
-    paddingBottom: 20,
-  },
-  contactItem: {
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  contactName: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#222",
-  },
-  contactDetails: {
-    fontSize: 14,
-    color: "#666",
-    marginTop: 2,
-  },
-  emptyText: {
-    textAlign: "center",
-    marginTop: 40,
-    color: "#aaa",
-    fontSize: 16,
-  },
-});
+function createStyles(colors: Colors) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.card,
+    },
+    header: {
+      flexDirection: "row",
+      paddingHorizontal: 16,
+      paddingTop: 50,
+      paddingBottom: 12,
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+      backgroundColor: colors.card,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    exitButton: {
+      padding: 4,
+    },
+    searchBox: {
+      paddingHorizontal: 16,
+      paddingVertical: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ddd",
+      backgroundColor: colors.card,
+    },
+    searchInput: {
+      backgroundColor: "#fff",
+      padding: 10,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: "#ddd",
+      fontSize: 16,
+      color: colors.text,
+    },
+    list: {
+      paddingHorizontal: 16,
+      paddingBottom: 20,
+      backgroundColor: colors.background,
+    },
+    contactItem: {
+      paddingVertical: 14,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    contactName: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: colors.text,
+    },
+    contactDetails: {
+      fontSize: 14,
+      color: colors.subText,
+      marginTop: 2,
+    },
+    emptyText: {
+      textAlign: "center",
+      marginTop: 40,
+      color: colors.text,
+      fontSize: 16,
+    },
+  });
+}
 
 export default ContactPickerModal;

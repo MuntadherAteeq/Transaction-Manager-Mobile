@@ -22,11 +22,6 @@ export const root = {
 export const Colors: { [key: string]: Colors } = {
   light: {
     ...root,
-    text: "#000",
-    background: "#f2f2f2",
-    icon: "#687076",
-    card: "#fff",
-    border: "#303030",
   },
   dark: {
     ...root,
@@ -34,7 +29,7 @@ export const Colors: { [key: string]: Colors } = {
     background: "#1C1C1C",
     icon: "#9BA1A6",
     card: "#2B2B2B",
-    border: "#2C2F33",
+    border: "#2B2B2B",
     subText: "#A0A3A7",
     input: "#2C2F33",
   },

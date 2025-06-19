@@ -6,9 +6,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text } from "./components/text";
 import { HomePage } from "./pages/Home";
 import { RecordsProvider } from "./models/Record";
+import { AddRecord } from "./pages/Add-Record";
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -49,6 +49,16 @@ export function App() {
               options={{
                 title: "Home",
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="AddRecord"
+              component={AddRecord} // Placeholder for AddRecord component
+              options={{
+                title: "Add Record",
+                headerBackTitle: "Back",
+                headerShown: false,
+                animation: "fade_from_bottom",
               }}
             />
           </Stack.Navigator>

@@ -12,15 +12,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Record, useRecords } from "../models/Record";
 import { Colors, useColors } from "../constants/Colors";
 import ContactPickerModal from "../components/ContactPickerModal";
 import { Text } from "../components/text";
 import { View } from "../components/view";
 import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "../components/SafeAreaView";
 
-const CustomerForm = () => {
+export const AddRecord = () => {
   const [formData, setFormData] = useState(new Record());
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -153,7 +153,7 @@ const CustomerForm = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -475,11 +475,10 @@ const createStyles = (colors: Colors) => {
       alignItems: "center",
     },
     importButtonText: {
-      color: "#fff",
       fontSize: 16,
       fontWeight: "600",
+      
     },
   });
 };
 
-export default CustomerForm;
