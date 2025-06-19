@@ -468,7 +468,7 @@ const createStyles = (colors: Colors) => {
       fontWeight: "600",
     },
     importButton: {
-      backgroundColor: "#2ecc71",
+      backgroundColor: colors.primary,
       paddingVertical: 10,
       borderRadius: 8,
       marginBottom: 20,
@@ -477,8 +477,6 @@ const createStyles = (colors: Colors) => {
     importButtonText: {
       fontSize: 16,
       fontWeight: "600",
-      
     },
   });
 };
-

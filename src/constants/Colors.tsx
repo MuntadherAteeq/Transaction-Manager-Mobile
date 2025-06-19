@@ -17,6 +17,8 @@ export const root = {
   card: "#fff",
   border: "#E0E0E0",
   input: "#F2F2F2",
+  positive: "#008E4A",
+  negative: "#D32F2F",
 };
 
 export const Colors: { [key: string]: Colors } = {
@@ -32,6 +34,8 @@ export const Colors: { [key: string]: Colors } = {
     border: "#2B2B2B",
     subText: "#A0A3A7",
     input: "#2C2F33",
+    positive: "#02A356",
+    negative: "#F44336",
   },
 };
 

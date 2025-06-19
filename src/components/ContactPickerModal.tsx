@@ -65,7 +65,9 @@ const ContactPickerModal: React.FC<ContactPickerModalProps> = ({
       );
       return nameMatch || phoneMatch;
     });
-    setFilteredContacts(filtered);
+    setFilteredContacts(
+      filtered.filter((predicate) => predicate.phoneNumbers?.length)
+    );
   };
 
   const renderItem = ({ item }: { item: Contacts.Contact }) => {
@@ -147,8 +149,6 @@ function createStyles(colors: Colors) {
       paddingBottom: 12,
       justifyContent: "space-between",
       alignItems: "center",
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
       backgroundColor: colors.card,
     },
     title: {
@@ -160,17 +160,15 @@ function createStyles(colors: Colors) {
     },
     searchBox: {
       paddingHorizontal: 16,
-      paddingVertical: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: "#ddd",
+      paddingVertical: 20,
       backgroundColor: colors.card,
     },
     searchInput: {
-      backgroundColor: "#fff",
+      backgroundColor: colors.background,
       padding: 10,
       borderRadius: 8,
       borderWidth: 1,
-      borderColor: "#ddd",
+      borderColor: colors.border,
       fontSize: 16,
       color: colors.text,
     },
