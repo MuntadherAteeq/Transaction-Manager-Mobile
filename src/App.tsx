@@ -1,4 +1,4 @@
-import { Assets as NavigationAssets } from "@react-navigation/elements";
+import { Assets } from "@react-navigation/elements";
 import { Asset } from "expo-asset";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
@@ -16,11 +16,7 @@ export function App() {
     async function prepare() {
       try {
         // Pre-load assets
-        await Asset.loadAsync([
-          ...NavigationAssets,
-          require("./assets/newspaper.png"),
-          require("./assets/bell.png"),
-        ]);
+        await Asset.loadAsync([...Assets]);
       } finally {
         setAppIsReady(true);
       }
