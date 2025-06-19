@@ -1,10 +1,5 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Image } from "react-native";
 import { HeaderButton, Text } from "@react-navigation/elements";
-import bell from "../assets/bell.png";
-import newspaper from "../assets/newspaper.png";
 import { Home } from "./screens/Home";
 import { Profile } from "./screens/Profile";
 import { Settings } from "./screens/Settings";
