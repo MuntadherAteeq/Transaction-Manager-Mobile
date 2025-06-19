@@ -23,6 +23,7 @@
     "expo-dev-client": "~5.1.7",
     "expo-image-picker": "~16.1.4",
     "expo-splash-screen": "~0.30.7",
+    "expo-sqlite": "~15.2.12",
     "expo-system-ui": "~5.0.6",
     "react": "19.0.0",
     "react-dom": "19.0.0",
