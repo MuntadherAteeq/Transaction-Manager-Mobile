@@ -19,6 +19,7 @@ import { Text } from "../components/text";
 import { View } from "../components/view";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "../components/SafeAreaView";
+import { useNavigation } from "@react-navigation/native";
 
 export const AddRecord = () => {
   const [formData, setFormData] = useState(new Record());
@@ -26,9 +27,9 @@ export const AddRecord = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const [showContactModal, setShowContactModal] = useState(false);
+  const navigator = useNavigation();
 
   const colors = useColors();
-  const styles = createStyles(colors);
   const validateForm = () => {
     const newErrors = {
       id: "",
@@ -128,7 +129,7 @@ export const AddRecord = () => {
           onPress: () => {
             addRecord(formData);
             setFormData(
-              new Record("", "", "", "", new Date().toISOString(), "", "", 0)
+              new Record(0, "", "", "", new Date().toISOString(), "", "", 0)
             );
             setErrors({});
             Alert.alert("Success", "Customer saved successfully!");
@@ -146,52 +147,151 @@ export const AddRecord = () => {
   };
 
   const handleReset = () => {
-    setFormData(
-      new Record("", "", "", "", new Date().toISOString(), "", "", 0)
-    );
+    setFormData(new Record(0, "", "", "", new Date().toISOString(), "", "", 0));
     setErrors({});
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
       <KeyboardAvoidingView
-        style={styles.container}
+        style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
-          style={styles.scrollView}
+          style={{
+            flex: 1,
+            backgroundColor: colors.background,
+          }}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.form}>
-            <Pressable style={styles.importButton} onPress={importFromContacts}>
-              <Text style={styles.importButtonText}>Import from Contacts</Text>
-            </Pressable>
+          <View
+            style={{
+              backgroundColor: colors.card,
+              margin: 16,
+              borderRadius: 12,
+              padding: 20,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.1,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "transparent",
+                marginBottom: 20,
+              }}
+            >
+              <Ionicons
+                name="arrow-back-outline"
+                size={24}
+                color={colors.icon}
+                style={{
+                  paddingHorizontal: 20,
+                  paddingVertical: 10,
+                }}
+                onPress={() => {
+                  navigator.goBack();
+                }}
+              />
+              <Pressable
+                style={{
+                  backgroundColor: colors.primary,
+                  paddingVertical: 10,
+                  borderRadius: 8,
+                  alignItems: "center",
+                  flexGrow: 1,
+                }}
+                onPress={importFromContacts}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "600",
+                  }}
+                >
+                  Import from Contacts
+                </Text>
+              </Pressable>
+            </View>
 
             {/* Avatar Section */}
-            <View style={styles.CustomerCard}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: colors.border,
+                borderWidth: 1,
+                marginBottom: 24,
+                padding: 16,
+                borderRadius: 12,
+              }}
+            >
               <View>
                 <TouchableOpacity
-                  style={styles.avatarContainer}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 50,
+                    overflow: "hidden",
+                    borderWidth: 1,
+                    borderColor: "#ddd",
+                  }}
                   onPress={handleImagePicker}
                 >
                   {formData.avatar ? (
                     <Image
                       source={{ uri: formData.avatar }}
-                      style={styles.avatar}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
                     />
                   ) : (
-                    <View style={styles.avatarPlaceholder}>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: colors.input,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 2,
+                        borderColor: colors.border,
+                      }}
+                    >
                       <Ionicons
                         name="camera-outline"
                         size={24}
                         color={colors.icon}
                       />
-                      <Text style={styles.avatarText}>Add Photo</Text>
+                      <Text
+                        style={{
+                          marginTop: 4,
+                          fontSize: 12,
+                          color: "#666",
+                        }}
+                      >
+                        Add Photo
+                      </Text>
                     </View>
                   )}
                 </TouchableOpacity>
               </View>
-              <View style={styles.avatarTextContainer}>
+              <View
+                style={{
+                  flex: 1,
+                  marginLeft: 16,
+                  justifyContent: "center",
+                }}
+              >
                 <Text style={{ fontSize: 17 }}>{formData.name}</Text>
                 <Text style={{ fontSize: 12, color: colors.subText }}>
                   {formData.phone}
@@ -200,12 +300,41 @@ export const AddRecord = () => {
             </View>
 
             {/* Name Field - Required */}
-            <View style={styles.inputGroup}>
-              <Text style={[styles.label, styles.required]}>Full Name </Text>
-              <View style={styles.inputContainer}>
+            <View
+              style={{
+                marginBottom: 20,
+                backgroundColor: colors.card,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  color: "#333",
+                  marginBottom: 8,
+                }}
+              >
+                Full Name{" "}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: 8,
+                  paddingHorizontal: 12,
+                  backgroundColor: colors.background,
+                }}
+              >
                 <Ionicons name="person-outline" size={20} color={colors.icon} />
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    flex: 1,
+                    paddingVertical: 12,
+                    fontSize: 16,
+                    color: colors.text,
+                  }}
                   value={formData.name}
                   onChangeText={(value) => handleInputChange("name", value)}
                   placeholder="Enter full name"
@@ -213,17 +342,54 @@ export const AddRecord = () => {
                 />
               </View>
               {errors.name && (
-                <Text style={styles.errorText}>{errors.name}</Text>
+                <Text
+                  style={{
+                    color: "#e74c3c",
+                    fontSize: 12,
+                    marginTop: 4,
+                  }}
+                >
+                  {errors.name}
+                </Text>
               )}
             </View>
 
             {/* Phone Field - Optional */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Phone Number</Text>
-              <View style={styles.inputContainer}>
+            <View
+              style={{
+                marginBottom: 20,
+                backgroundColor: colors.card,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  color: "#333",
+                  marginBottom: 8,
+                }}
+              >
+                Phone Number
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: 8,
+                  paddingHorizontal: 12,
+                  backgroundColor: colors.background,
+                }}
+              >
                 <Ionicons name="call-outline" size={20} color={colors.icon} />
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    flex: 1,
+                    paddingVertical: 12,
+                    fontSize: 16,
+                    color: colors.text,
+                  }}
                   value={formData.phone}
                   onChangeText={(value) => handleInputChange("phone", value)}
                   placeholder="Enter phone number"
@@ -232,56 +398,176 @@ export const AddRecord = () => {
                 />
               </View>
               {errors.phone && (
-                <Text style={styles.errorText}>{errors.phone}</Text>
+                <Text
+                  style={{
+                    color: "#e74c3c",
+                    fontSize: 12,
+                    marginTop: 4,
+                  }}
+                >
+                  {errors.phone}
+                </Text>
               )}
             </View>
 
             {/* Email Field - Optional */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Email Address</Text>
-              <View style={styles.inputContainer}>
+            <View
+              style={{
+                marginBottom: 20,
+                backgroundColor: colors.card,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  color: "#333",
+                  marginBottom: 8,
+                }}
+              >
+                Email Address
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: 8,
+                  paddingHorizontal: 12,
+                  backgroundColor: colors.background,
+                }}
+              >
                 <Ionicons name="mail-outline" size={20} color={colors.icon} />
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    flex: 1,
+                    paddingVertical: 12,
+                    fontSize: 16,
+                    color: colors.text,
+                  }}
                   value={formData.email}
                   onChangeText={(value) => handleInputChange("email", value)}
                   placeholder="Enter email address"
-                  placeholderTextColor="#999"
+                  placeholderTextColor={colors.muted}
                   keyboardType="email-address"
                   autoCapitalize="none"
                 />
               </View>
               {errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
+                <Text
+                  style={{
+                    color: "#e74c3c",
+                    fontSize: 12,
+                    marginTop: 4,
+                  }}
+                >
+                  {errors.email}
+                </Text>
               )}
             </View>
 
             {/* Date Field - Auto-filled */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date Created</Text>
-              <View style={[styles.inputContainer, styles.disabledInput]}>
-                <Ionicons name="calendar-outline" style={styles.inputIcon} />
-                <Text style={styles.dateText}>
+            <View
+              style={{
+                marginBottom: 20,
+                backgroundColor: colors.card,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  color: "#333",
+                  marginBottom: 8,
+                }}
+              >
+                Date Created
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: 8,
+                  paddingHorizontal: 12,
+                  backgroundColor: colors.background,
+                }}
+              >
+                <Ionicons
+                  name="calendar-outline"
+                  style={{
+                    marginRight: 10,
+                  }}
+                />
+                <Text
+                  style={{
+                    flex: 1,
+                    paddingVertical: 12,
+                    fontSize: 16,
+                    color: colors.text,
+                  }}
+                >
                   {new Date().toLocaleDateString()}
                 </Text>
               </View>
             </View>
 
             {/* Action Buttons */}
-            <View style={styles.buttonContainer}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 12,
+              }}
+            >
               <TouchableOpacity
-                style={styles.resetButton}
+                style={{
+                  flex: 1,
+                  paddingVertical: 12,
+                  borderWidth: 1,
+                  borderColor: "#ddd",
+                  borderRadius: 8,
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                }}
                 onPress={handleReset}
               >
-                <Text style={styles.resetButtonText}>Reset</Text>
+                <Text
+                  style={{
+                    color: "#666",
+                    fontSize: 16,
+                    fontWeight: "600",
+                  }}
+                >
+                  Reset
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.submitButton}
+                style={{
+                  flex: 2,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingVertical: 12,
+                  backgroundColor: "#3498db",
+                  borderRadius: 8,
+                  gap: 8,
+                }}
                 onPress={handleSubmit}
               >
                 <Ionicons name="save-outline" size={18} color="#fff" />
-                <Text style={styles.submitButtonText}>Save Customer</Text>
+                <Text
+                  style={{
+                    color: "#fff",
+                    fontSize: 16,
+                    fontWeight: "600",
+                  }}
+                >
+                  Save Customer
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -303,182 +589,4 @@ export const AddRecord = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-};
-
-const createStyles = (colors: Colors) => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    scrollView: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    header: {
-      backgroundColor: colors.background,
-      paddingTop: 60,
-      paddingBottom: 20,
-      paddingHorizontal: 20,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: "bold",
-      color: colors.text,
-      marginBottom: 4,
-    },
-    subtitle: {
-      fontSize: 14,
-      color: colors.subText,
-    },
-    form: {
-      backgroundColor: colors.card,
-
-      margin: 16,
-      borderRadius: 12,
-      padding: 20,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
-    CustomerCard: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      borderColor: colors.border,
-      borderWidth: 1,
-      marginBottom: 24,
-      padding: 16,
-      borderRadius: 12,
-    },
-    avatarTextContainer: {
-      flex: 1,
-
-      marginLeft: 16,
-      justifyContent: "center",
-    },
-    avatarContainer: {
-      width: 80,
-      height: 80,
-      borderRadius: 50,
-
-      overflow: "hidden",
-      borderWidth: 1,
-      borderColor: "#ddd",
-    },
-    avatar: {
-      width: "100%",
-      height: "100%",
-    },
-    avatarPlaceholder: {
-      width: "100%",
-      height: "100%",
-      backgroundColor: colors.input,
-      justifyContent: "center",
-      alignItems: "center",
-      borderWidth: 2,
-      borderColor: colors.border,
-    },
-    avatarText: {
-      marginTop: 4,
-      fontSize: 12,
-      color: "#666",
-    },
-    inputGroup: {
-      marginBottom: 20,
-      backgroundColor: colors.card,
-    },
-    label: {
-      fontSize: 14,
-      fontWeight: "600",
-      color: "#333",
-      marginBottom: 8,
-    },
-    required: {
-      color: "#e74c3c",
-    },
-    inputContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      borderWidth: 1,
-      borderColor: colors.border,
-      borderRadius: 8,
-      paddingHorizontal: 12,
-      backgroundColor: colors.background,
-    },
-    disabledInput: {
-      backgroundColor: colors.input,
-    },
-    inputIcon: {
-      marginRight: 10,
-    },
-    input: {
-      flex: 1,
-      paddingVertical: 12,
-      fontSize: 16,
-      color: colors.text,
-    },
-    dateText: {
-      flex: 1,
-      paddingVertical: 12,
-      fontSize: 16,
-      color: "#666",
-    },
-    errorText: {
-      color: "#e74c3c",
-      fontSize: 12,
-      marginTop: 4,
-    },
-    buttonContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      gap: 12,
-    },
-    resetButton: {
-      flex: 1,
-      paddingVertical: 12,
-      borderWidth: 1,
-      borderColor: "#ddd",
-      borderRadius: 8,
-      alignItems: "center",
-      backgroundColor: "#fff",
-    },
-    resetButtonText: {
-      color: "#666",
-      fontSize: 16,
-      fontWeight: "600",
-    },
-    submitButton: {
-      flex: 2,
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      paddingVertical: 12,
-      backgroundColor: "#3498db",
-      borderRadius: 8,
-      gap: 8,
-    },
-    submitButtonText: {
-      color: "#fff",
-      fontSize: 16,
-      fontWeight: "600",
-    },
-    importButton: {
-      backgroundColor: colors.primary,
-      paddingVertical: 10,
-      borderRadius: 8,
-      marginBottom: 20,
-      alignItems: "center",
-    },
-    importButtonText: {
-      fontSize: 16,
-      fontWeight: "600",
-    },
-  });
 };

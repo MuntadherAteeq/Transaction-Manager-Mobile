@@ -19,6 +19,7 @@ export const root = {
   input: "#F2F2F2",
   positive: "#008E4A",
   negative: "#D32F2F",
+  muted: "#999",
 };
 
 export const Colors: { [key: string]: Colors } = {

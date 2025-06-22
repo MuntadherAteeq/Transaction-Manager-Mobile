@@ -1,7 +1,8 @@
 import { createContext, ReactNode, useContext, useState } from "react";
+import { RecordType } from "../constants/Database";
 
-export class Record {
-  id: string;
+export class Record implements RecordType {
+  id: number;
   name: string;
   date: string;
   description: string;
@@ -11,7 +12,7 @@ export class Record {
   total_amount: number;
 
   constructor(
-    id?: string,
+    id?: number,
     name?: string,
     phone?: string,
     email?: string,
@@ -20,11 +21,11 @@ export class Record {
     description?: string,
     total_amount?: number
   ) {
-    this.id = id || "0";
+    this.id = id || 0;
     this.name = name || "";
     this.date = date
       ? new Date(date).toLocaleDateString()
-      : new Date().toISOString();
+      : new Date().toLocaleDateString();
     this.description = description ? description : "";
     this.total_amount = total_amount || 0;
     this.phone = phone || "";
@@ -36,8 +37,8 @@ export class Record {
 type RecordsContextType = {
   records: Record[];
   addRecord: (record: Record) => void;
-  deleteRecord: (id: string) => void;
-  updateRecord: (id: string, updated: Partial<Record>) => void;
+  deleteRecord: (id: number) => void;
+  updateRecord: (id: number, updated: Partial<Record>) => void;
 };
 
 const RecordsContext = createContext<RecordsContextType | undefined>(undefined);
@@ -49,11 +50,11 @@ export const RecordsProvider = ({ children }: { children: ReactNode }) => {
     setRecords((prev) => [...prev, record]);
   };
 
-  const deleteRecord = (id: string) => {
+  const deleteRecord = (id: number) => {
     setRecords((prev) => prev.filter((rec) => rec.id !== id));
   };
 
-  const updateRecord = (id: string, updated: Partial<Record>) => {
+  const updateRecord = (id: number, updated: Partial<Record>) => {
     setRecords((prev) =>
       prev.map((rec) => (rec.id === id ? { ...rec, ...updated } : rec))
     );

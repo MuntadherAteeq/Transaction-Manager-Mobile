@@ -15,36 +15,25 @@ export default function RecordListItem(props: { record: Record }) {
 
   return (
     <View style={styles.container}>
+      {/* Avatar */}
+      <Image
+        source={require(`../../../assets/images/Avatar.png`)}
+        style={styles.avatar}
+        resizeMode="cover"
+      />
       {/* Header Row */}
       <View style={styles.headerRow}>
         <Text style={styles.dateText}>{date}</Text>
         <Text style={styles.nameText}>{name}</Text>
-        <Image
-          source={
-            avatar !== ""
-              ? { uri: avatar }
-              : require("../../../assets/images/Avatar.png")
-          }
-          style={styles.avatar}
-          resizeMode="cover"
-        />
       </View>
-
       {/* Footer Row */}
       <View style={styles.footerRow}>
-        <Text
-          style={[
-            styles.amountText,
-            { color: isPositive ? "#16a34a" : "#dc2626" },
-          ]}
-        >
-          {total_amount.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD",
-          })}
+        <Text style={styles.transactionIdText}>{phone}</Text>
+        <Text style={styles.transactionIdText}>{description}</Text>
+        <Text style={styles.amountText}>
+          {isPositive ? `+${total_amount}` : total_amount}
         </Text>
       </View>
-
       {/* Divider Line */}
       <View style={styles.divider} />
     </View>
@@ -55,19 +44,10 @@ const createStyles = (colors: ReturnType<typeof useColors>) =>
   StyleSheet.create({
     container: {
       width: "100%",
-      height: 80,
-      paddingHorizontal: 20,
+      height: 100,
       position: "relative",
-      paddingVertical: 8,
       alignSelf: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
+      flexDirection: "column",
     },
     headerRow: {
       flexDirection: "row",
