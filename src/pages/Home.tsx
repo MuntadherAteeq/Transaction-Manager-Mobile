@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useColors } from "../constants/Colors";
 import { MainTab } from "./Tabs/Main-Tab";
+import { HistoryTab } from "./Tabs/History-Tab";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,8 +33,8 @@ export function HomePage() {
         })}
       >
         <Tab.Screen name="Home" component={MainTab} />
-        {/* <Tab.Screen name="Profile" component={} />
-        <Tab.Screen name="Settings" component={} /> */}
+        <Tab.Screen name="Settings" component={HistoryTab} />
+        {/* {/* <Tab.Screen name="Profile" component={} /> */}
       </Tab.Navigator>
     </SafeAreaView>
   );
