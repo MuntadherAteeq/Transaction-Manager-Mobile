@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { RecordType } from "../constants/Database";
 
-export class Record implements RecordType {
+export class Record {
   id: number;
   name: string;
   date: string;
